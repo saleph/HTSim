@@ -6,9 +6,12 @@ import random
 
 def perform_log():
     schedd = htcondor.Schedd(htcondor.Collector().locate(htcondor.DaemonTypes.Schedd, "masterubuntu"))
-    for history in schedd.history(classad.ExprTree("1"), ["ClusterId", "ProcId"], 10):
-        print "{}.{}".format(history["ClusterId"], history["ProcId"])
-        print "Attribs no: ", len(history)
+    # for history in schedd.history(classad.ExprTree("1"), ["ClusterId", "ProcId"], 10):
+    #     print "{}.{}".format(history["ClusterId"], history["ProcId"])
+    #     print "Attribs no: ", len(history)
+    jobs = schedd.query("1", ["ClusterId", "JobStatus", "LastRemoteHost"])
+    for job in jobs:
+        print "Cluster: ", job["ClusterId"], "Status:", job["JobStatus"], "Host:", job["LastRemoteHost"]
 
 
 def prepare_work(work_no):
@@ -45,3 +48,4 @@ if __name__ == "__main__":
     for i in range(10):
         prepare_work(i)
         print perform_submit(i)
+    perform_log()

@@ -13,7 +13,7 @@ def do_job():
             numbers.append(float(line))
     powers = [x**2 for x in numbers]
 
-    time.sleep(3)
+    time.sleep(10)
 
     with open("powers", "w") as f:
         for a, b in zip(numbers, powers):
